@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock title%}
-{% block content %}
 
-<h1>Trish</h1>
+{% block content %}
+<p>hello</p>
+
+{% for review in review_list %}
+    <p>review found</p>
+{% endfor %}
+
 
 {% endblock content %}
