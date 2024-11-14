@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="home"), # new
     path("reviews/", include('reviews.urls')),
+    path("users/", include('users.urls')),
     # path('products/', include('products.urls')),
     # path('users/', include('users.urls')),
 ] + debug_toolbar_urls()
