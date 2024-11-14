@@ -141,3 +141,6 @@ INTERNAL_IPS = [
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" #XXX update later
 CRISPY_TEMPLATE_PACK = "bootstrap5" #XXX update later
+
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"

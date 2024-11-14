@@ -3,11 +3,7 @@
 {% block title %}Home{% endblock title%}
 
 {% block content %}
-<p>hello</p>
+<p>Home</p>
 
-{% for review in review_list %}
-    <p>review found</p>
-{% endfor %}
-
-
+<a href="{% url 'review_list' %}">Reviews</a>
 {% endblock content %}
