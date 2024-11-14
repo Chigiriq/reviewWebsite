@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .models import Review
 
@@ -9,6 +9,6 @@ class HomePageView(TemplateView):
 
 # class ReviewDetailView(View):
 
-class ReviewListView(View):
+class ReviewListView(ListView):
     model = Review
     template_name = "review_list.html"

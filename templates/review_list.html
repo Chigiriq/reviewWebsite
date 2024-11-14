@@ -1,23 +1,25 @@
 {% extends "base.html" %}
+
 {% block title %}Reviews{% endblock title %}
 {% comment %} change this later {% endcomment %}
-
+<p>Review List</p>
 {% block content %}
-<p>hello</p>
+
 {% for review in review_list %}
 <div class="card">
     <div class="card-header">
         <span class="fw-bold">
-            <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
+            <a href="{{ get_absolute_url }}">{{ review.title }}</a>
         </span> &middot;
-        <span class="text-muted">by {{ article.author }} |
-            {{ article.date }}</span>
+        <span class="text-muted">by {{ review.author }} |
+            {{ review.date }}</span>
     </div>
 
     <div class="card-body">
-        <p>{{ article.game }}</p>
-        <p>{{ article.body }}</p>
+        <p>{{ review.game }}</p>
+        <p>{{ review.body }}</p>
     </div>
-
+    <br>
+</div>
 {% endfor %}
 {% endblock content %}
