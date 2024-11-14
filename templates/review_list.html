@@ -9,7 +9,7 @@
 <div class="card">
     <div class="card-header">
         <span class="fw-bold">
-            <a href="{{ get_absolute_url }}">{{ review.title }}</a>
+            <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
         </span> &middot;
         <span class="text-muted">by {{ review.author }} |
             {{ review.date }}</span>

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     #3rd party
     'debug_toolbar',
+    "crispy_forms",#XXX update later
+    "crispy_bootstrap5",#XXX update later
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,6 @@ AUTH_USER_MODEL = "users.CustomUser"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" #XXX update later
+CRISPY_TEMPLATE_PACK = "bootstrap5" #XXX update later
