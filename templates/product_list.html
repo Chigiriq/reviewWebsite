@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Products{% endblock title %}
+{% comment %} change this later {% endcomment %}
+<p>Product List</p>
+{% block content %}
+
+{% for product in product_list %}
+    <p>{{ product.name }} costs {{ product.price}}
+{% endfor %}
+{% endblock content %}
