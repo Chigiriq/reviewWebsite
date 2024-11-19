@@ -5,6 +5,12 @@
 <p>Review List</p>
 {% block content %}
 
+{% if user.verifiedReviewer %}
+    {% comment %} <p>Hi {{ user.name }}, you are a Verified Reviewer and can Post Reviews</p> {% endcomment %}
+    <a href="">Post a review</a>
+{% endif %}
+
+
 {% for review in review_list %}
 <div class="card">
     <div class="card-header">

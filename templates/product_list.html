@@ -6,6 +6,18 @@
 {% block content %}
 
 {% for product in product_list %}
-    <p>{{ product.name }} costs {{ product.price}}
+    <div>
+        <div>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+
+            {{ product.name }}
+        </div>
+
+        <div>
+            ${{ product.price}}
+        </div>
+
+        <br>
+    </div>
 {% endfor %}
 {% endblock content %}

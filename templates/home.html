@@ -4,7 +4,11 @@
 
 {% block content %}
 <p>Home</p>
+<div>
+    <a href="{% url 'review_list' %}">Reviews</a>
+</div>
 
-<a href="{% url 'review_list' %}">Reviews</a>
-
+<div>
+    <a href="{% url 'product_list' %}">Products</a>
+</div>
 {% endblock content %}
