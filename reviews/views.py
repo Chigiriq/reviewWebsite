@@ -1,3 +1,5 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, FormView
@@ -53,3 +55,19 @@ class ReviewDetailView(View):
     def post(self, request, *args, **kwargs):
         view = CommentPost.as_view()
         return view(request, *args, **kwargs)
+    
+class SearchView(ListView):
+    model = Review
+    template_name = 'search.html'
+    context_object_name = 'all_search_results'
+
+    def get_queryset(self):
+        result = super(SearchView, self).get_queryset()
+        query = self.request.GET.get('search')
+        if query:
+            postresult = Review.objects.filter(title__contains=query) or Review.objects.filter(game__contains=query) or Review.objects.filter(body__contains=query)
+            result = postresult
+        else:
+            result = None
+        return result
+        

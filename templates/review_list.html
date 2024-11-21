@@ -5,11 +5,17 @@
 <p>Review List</p>
 {% block content %}
 
-{% if user.verifiedReviewer %}
-    {% comment %} <p>Hi {{ user.name }}, you are a Verified Reviewer and can Post Reviews</p> {% endcomment %}
-    <a href="">Post a review</a>
-{% endif %}
+<div>
+    {% if user.verifiedReviewer %}
+        {% comment %} <p>Hi {{ user.name }}, you are a Verified Reviewer and can Post Reviews</p> {% endcomment %}
+        <a href="">Post a review</a>
+    {% endif %}
 
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}" >
+        <input class="form-control mr-sm-2" type="search" name="search">
+        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit"> Search </button>
+    </form>
+</div>
 
 {% for review in review_list %}
 <div class="card">
