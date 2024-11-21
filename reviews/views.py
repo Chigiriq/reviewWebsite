@@ -58,7 +58,7 @@ class ReviewDetailView(View):
     
 class SearchView(ListView):
     model = Review
-    template_name = 'search.html'
+    template_name = 'searchReview.html'
     context_object_name = 'all_search_results'
 
     def get_queryset(self):
