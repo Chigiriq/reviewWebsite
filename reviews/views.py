@@ -63,7 +63,7 @@ class SearchView(ListView):
 
     def get_queryset(self):
         result = super(SearchView, self).get_queryset()
-        query = self.request.GET.get('search')
+        query = self.request.GET.get('searchRev')
         if query:
             postresult = Review.objects.filter(title__contains=query) or Review.objects.filter(game__contains=query) or Review.objects.filter(body__contains=query)
             result = postresult
