@@ -2,4 +2,9 @@
 {% block title %}Profile{% endblock title %}
 {% block content %}
 <p> {{user.username}} </p>
+<p>Bio: {{user.bio}} </p>
+{% if user.verifiedReviewer%}
+<p> Congrats! You are a verified reviewer :)</p>
+{%endif%}
+<a href="{% url 'password_change' %}" class="btn btn-primary">Change Password</a>
 {% endblock content %}
