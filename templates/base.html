@@ -75,16 +75,16 @@
     </div>
   </main>
 
-  <!-- Bootstrap JavaScript Bundle -->
+  <!-- Back Button Javascript -->
   <script>
-    // JavaScript to handle Back button protection
     document.getElementById("backButton").addEventListener("click", function() {
-      // Check if there is history to go back to
-      if (window.history.length = 1) {
-        window.history.back(); // Navigate back to the previous page in the history
+      // Check if we're on the homepage or have no previous history
+      if (window.history.state === null || window.history.length === 1) {
+        // If no history or on the homepage, redirect to homepage
+        window.location.href = "{% url 'home' %}";
       } else {
-        // If no previous history, redirect to a default page or reload the current page
-        window.location.href = "{% url 'home' %}"; // Redirect to homepage if no history
+        // Otherwise, go back in history
+        window.history.back();
       }
     });
   </script>
