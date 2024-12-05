@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "crispy_forms",  # XXX update later
     "crispy_bootstrap5",  # XXX update later
+    "star_ratings",
 ]
 
 MIDDLEWARE = [

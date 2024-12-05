@@ -3,6 +3,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% load ratings %}
+
+{% ratings object %}
 <img src="{{ review.image.url }}" alt="{{ review.name }}" style="max-width: 100%; height: auto;">
 <div class="review-entry">
     <h2>{{ object.title }}</h2>

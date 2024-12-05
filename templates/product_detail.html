@@ -3,6 +3,8 @@
 {% block title %}Product Detail{% endblock title %}
 
 {% block content %}
+{% load ratings %}
+{% ratings product %}
 {% comment %} <a href="{% url 'product_list' %}" 
    style="display: inline-flex; 
           justify-content: center; 

@@ -31,6 +31,7 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("products/", include("products.urls")),
+    path("ratings/", include("star_ratings.urls", namespace="ratings")),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
