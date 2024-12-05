@@ -14,6 +14,7 @@ from datetime import datetime
 from products.models import Product
 from .models import Review
 from .forms import CommentForm
+from django.shortcuts import get_object_or_404
 
 
 class HomePageView(TemplateView):
@@ -55,13 +56,17 @@ class CommentPost(FormView):  # new
     form_class = CommentForm
     template_name = "review_detail.html"
 
+    def get_object(self):
+        pk = self.kwargs.get("pk")
+        return get_object_or_404(Review, pk=pk)
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         comment = form.save(commit=False)
-        comment.article = self.object
+        comment.review = self.object
         comment.author = self.request.user
         comment.save()
         return super().form_valid(form)
