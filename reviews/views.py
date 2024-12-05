@@ -2,7 +2,7 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 from django.urls import reverse
 
 from .models import Review
@@ -70,4 +70,9 @@ class SearchView(ListView):
         else:
             result = None
         return result
+    
+class ReviewCreateView(CreateView):
+    model = Review
+    template_name = "new_review.html"
+    fields = ["title", "author", "body"]
         
