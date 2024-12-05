@@ -2,16 +2,38 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    DetailView,
+    FormView,
+    CreateView,
+)
 from django.urls import reverse
-
+from datetime import datetime
+from products.models import Product
 from .models import Review
 from .forms import CommentForm
+
 
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = Review.objects.all()[:3]
+        context["products"] = Product.objects.all()[:4]
+        # this is for if we want to add a news section.
+        # the "news" could just be updates on what has been posted or something
+        # context["latest_news"] = News.objects.order_by("-publish_date")[:5]
+
+        context["current_year"] = datetime.now().year
+
+        return context
+
+
 # class ReviewDetailView(View):
+
 
 class ReviewListView(ListView):
     model = Review
@@ -26,6 +48,7 @@ class CommentGet(DetailView):  # new
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
         return context
+
 
 class CommentPost(FormView):  # new
     model = Review
@@ -47,6 +70,7 @@ class CommentPost(FormView):  # new
         review = self.object
         return reverse("review_detail", kwargs={"pk": review.pk})
 
+
 class ReviewDetailView(View):
     def get(self, request, *args, **kwargs):
         view = CommentGet.as_view()
@@ -55,24 +79,29 @@ class ReviewDetailView(View):
     def post(self, request, *args, **kwargs):
         view = CommentPost.as_view()
         return view(request, *args, **kwargs)
-    
+
+
 class SearchView(ListView):
     model = Review
-    template_name = 'searchReview.html'
-    context_object_name = 'all_search_results'
+    template_name = "searchReview.html"
+    context_object_name = "all_search_results"
 
     def get_queryset(self):
         result = super(SearchView, self).get_queryset()
-        query = self.request.GET.get('searchRev')
+        query = self.request.GET.get("searchRev")
         if query:
-            postresult = Review.objects.filter(title__contains=query) or Review.objects.filter(game__contains=query) or Review.objects.filter(body__contains=query)
+            postresult = (
+                Review.objects.filter(title__contains=query)
+                or Review.objects.filter(game__contains=query)
+                or Review.objects.filter(body__contains=query)
+            )
             result = postresult
         else:
             result = None
         return result
-    
+
+
 class ReviewCreateView(CreateView):
     model = Review
     template_name = "new_review.html"
     fields = ["title", "author", "body"]
-        

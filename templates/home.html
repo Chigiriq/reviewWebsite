@@ -1,14 +1,70 @@
-{% extends "base.html" %}
+{{% extends "base.html" %}
 
-{% block title %}Home{% endblock title%}
+{% block title %}Blue's Reviews - Home{% endblock title %}
 
 {% block content %}
-<p>Home</p>
-<div>
-    <a href="{% url 'review_list' %}">Reviews</a>
-</div>
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="hero text-center p-4 bg-primary text-white rounded">
+        <h1>Welcome to Blue's Reviews</h1>
+        <p>Your ultimate destination for honest and detailed video game reviews.</p>
+        <a href="{% url 'review_list' %}" class="btn btn-light mt-3">Explore Reviews</a>
+    </div>
 
-<div>
-    <a href="{% url 'product_list' %}">Products</a>
+    <!-- Featured Reviews -->
+    <section class="featured-reviews mt-5">
+        <h2 class="text-center">Featured Reviews</h2>
+        <div class="row">
+            {% for review in reviews %}
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ review.title }}</h5>
+                        <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
+                        <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products mt-5">
+        <h2 class="text-center">Popular Products</h2>
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-4">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">${{ product.price }}</p>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Latest News -->
+    <section class="latest-news mt-5">
+        <h2 class="text-center">Latest News in Gaming</h2>
+        <ul class="list-group">
+            {% for news in latest_news %}
+            <li class="list-group-item">
+                <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
+                <span class="badge bg-secondary float-end">{{ news.publish_date }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-5 text-center">
+        <p>&copy; {{ current_year }} Blue's Reviews. All Rights Reserved.</p>
+    </footer>
 </div>
 {% endblock content %}

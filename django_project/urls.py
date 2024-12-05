@@ -20,13 +20,14 @@ from django.urls import path, include
 from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.static import static
+from reviews.views import HomePageView
 
 
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
+    path("", HomePageView.as_view(), name="home"),
     path("reviews/", include("reviews.urls")),
     path("users/", include("users.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
