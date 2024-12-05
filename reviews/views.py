@@ -40,7 +40,7 @@ class ReviewListView(ListView):
     template_name = "review_list.html"
 
 
-class CommentGet(DetailView):  # new
+class CommentGet(DetailView):
     model = Review
     template_name = "review_detail.html"
 

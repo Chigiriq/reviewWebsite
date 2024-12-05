@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block title %}Blue's Reviews - Home{% endblock title %}
+{% load ratings %}
+
 
 {% block content %}
 <div class="container mt-4">
@@ -18,11 +20,14 @@
             {% for review in reviews %}
             <div class="col-md-4">
                 <div class="card shadow-sm mb-4">
-                    <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}">
+                    <!-- later logan make the images a standard size so they look nice on the home page-->
+                    <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}"style="max-width: 100%; height: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">{{ review.title }}</h5>
                         <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
                         <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                        {% ratings review %}
+
                     </div>
                 </div>
             </div>
@@ -42,6 +47,7 @@
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">${{ product.price }}</p>
                         <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                        {% ratings product %}
                     </div>
                 </div>
             </div>
