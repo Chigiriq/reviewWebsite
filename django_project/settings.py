@@ -22,15 +22,22 @@ env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+FORCE_SCRIPT_NAME = (
+        "/" + os.environ.get("SITE_NAME", "")
+        if os.environ.get("SITE_NAME", "") != ""
+        else ""
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^(gvs%=5n=h^@u$_=@c8yh1dipe(by!8t86(yu@2$nry(5$v)-"
+# SECRET_KEY = "django-insecure-^(gvs%=5n=h^@u$_=@c8yh1dipe(by!8t86(yu@2$nry(5$v)-"
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
 
 # Application definition
@@ -55,7 +62,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    "django.middleware.security.SecurityMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -63,7 +70,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware", #added
 ]
 
 ROOT_URLCONF = "django_project.urls"
@@ -90,14 +97,26 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
+INTERNAL_IPS = [
+"127.0.0.1",
+"localhost",
+]
 
+# DATABASES = {
+#     # local SQLite database used for development and testing
+#     "local": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     },
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -138,6 +157,17 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -146,10 +176,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # new stuff
 AUTH_USER_MODEL = "users.CustomUser"
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # XXX update later
 CRISPY_TEMPLATE_PACK = "bootstrap5"  # XXX update later
