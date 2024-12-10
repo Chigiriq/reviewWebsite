@@ -21,6 +21,7 @@ from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf import settings
 from django.conf.urls.static import static
 from reviews.views import HomePageView
+from reviews import views
 
 
 from django.views.generic.base import TemplateView
@@ -33,6 +34,17 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("products/", include("products.urls")),
     path("ratings/", include("star_ratings.urls", namespace="ratings")),
+    path("update_bio/", views.update_bio, name="update_bio"),
+    path(
+        "upload_profile_picture/",
+        views.upload_profile_picture,
+        name="upload_profile_picture",
+    ),
+    path(
+        "apply_verified_reviewer/",
+        views.apply_verified_reviewer,
+        name="apply_verified_reviewer",
+    ),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:

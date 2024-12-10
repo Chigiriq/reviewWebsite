@@ -1,6 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import (
     TemplateView,
@@ -9,12 +9,46 @@ from django.views.generic import (
     FormView,
     CreateView,
 )
+from django.contrib import messages
 from django.urls import reverse
 from datetime import datetime
 from products.models import Product
 from .models import Review
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.files.storage import default_storage
+
+
+@login_required
+def apply_verified_reviewer(request):
+    if not request.user.verifiedReviewer:
+        request.user.verifiedReviewer = False
+        request.user.save()
+        messages.success(request, "You are now a verified reviewer!")
+    else:
+        messages.info(request, "You are already a verified reviewer.")
+    return redirect("profile")
+
+
+@login_required
+def profile_view(request):
+    return render(request, "profile.html")
+
+
+# def profile_view(request):
+# return render(request, "profile.html", {"user": request.user})
+
+
+@login_required
+def upload_profile_picture(request):
+    if request.method == "POST" and request.FILES.get("profile_picture"):
+        picture = request.FILES["profile_picture"]
+        request.user.profile_picture.save(picture.name, picture)
+        messages.success(request, "Profile picture updated successfully!")
+    else:
+        messages.error(request, "Please upload a valid picture.")
+    return redirect("profile")
 
 
 class HomePageView(TemplateView):
@@ -110,3 +144,15 @@ class ReviewCreateView(CreateView):
     model = Review
     template_name = "new_review.html"
     fields = ["title", "author", "body"]
+
+
+def update_bio(request):
+    if request.method == "POST":
+        new_bio = request.POST.get("bio")
+        if new_bio:
+            request.user.bio = new_bio
+            request.user.save()
+            messages.success(request, "Bio updated successfully!")
+        else:
+            messages.error(request, "Bio cannot be empty.")
+    return redirect("profile")

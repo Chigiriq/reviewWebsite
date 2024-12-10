@@ -2,6 +2,7 @@
 
 {% block title %}Reviews{% endblock title %}
 {% comment %} change this later {% endcomment %}
+{% load ratings %}
 <p>Review List</p>
 {% block content %}
 
@@ -23,6 +24,7 @@
         <span class="fw-bold">
             <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
         </span> &middot;
+        {% ratings review %}
         <span class="text-muted">by {{ review.author }} |
             {{ review.date }}</span>
     </div>

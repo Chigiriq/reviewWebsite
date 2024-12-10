@@ -60,18 +60,16 @@
     <section class="latest-news mt-5">
         <h2 class="text-center">Latest News in Gaming</h2>
         <ul class="list-group">
-            {% for news in latest_news %}
+            {% for review in latest_review %}
             <li class="list-group-item">
-                <a href="{{ news.get_absolute_url }}">{{ news.title }}</a>
-                <span class="badge bg-secondary float-end">{{ news.publish_date }}</span>
+                <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
+                <span class="badge bg-secondary float-end">{{ review.publish_date }}</span>
             </li>
             {% endfor %}
         </ul>
     </section>
 
     <!-- Footer -->
-    <footer class="mt-5 text-center">
-        <p>&copy; {{ current_year }} Blue's Reviews. All Rights Reserved.</p>
-    </footer>
+   
 </div>
 {% endblock content %}

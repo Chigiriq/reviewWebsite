@@ -1,10 +1,55 @@
 {% extends "base.html" %}
+
 {% block title %}Profile{% endblock title %}
+
 {% block content %}
-<p> {{user.username}} </p>
-<p>Bio: {{user.bio}} </p>
-{% if user.verifiedReviewer%}
-<p> Congrats! You are a verified reviewer :)</p>
-{%endif%}
-<a href="{% url 'password_change' %}" class="btn btn-primary">Change Password</a>
+<div class="profile-container">
+    <h1>Profile</h1>
+
+    <!-- User Information -->
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <!-- Bio Section -->
+    <p><strong>Bio:</strong> {{ user.bio }}</p>
+    <form method="post" action="{% url 'update_bio' %}">
+        {% csrf_token %}
+        <textarea name="bio" class="form-control" rows="3" placeholder="Write your bio here...">{{ user.bio }}</textarea>
+        <button type="submit" class="btn btn-success mt-2">Update Bio</button>
+    </form>
+
+    <!-- Profile Picture Upload -->
+
+    <div class="profile-picture-section mt-4">
+        <p><strong>Profile Picture:</strong></p>
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" action="{% url 'upload_profile_picture' %}">
+            {% csrf_token %}
+            <input type="file" name="profile_picture" class="form-control-file mt-2">
+            <button type="submit" class="btn btn-primary mt-2">Upload Picture</button>
+        </form>
+    </div>
+
+    
+
+    <!-- Verified Reviewer Section -->
+    {% if user.verifiedReviewer %}
+    <p class="text-success">You are a verified reviewer! 🎉</p>
+{% elif user.review_request_status == "Pending" %}
+    <p class="text-warning">Your application is under review.</p>
+{% elif user.review_request_status == "Denied" %}
+    <p class="text-danger">Your application was denied. Please contact support for more information.</p>
+{% else %}
+    <form method="post" action="{% url 'apply_verified_reviewer' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Apply to be a Verified Reviewer</button>
+    </form>
+{% endif %}
+    <!-- Change Password Button -->
+    <a href="{% url 'password_change' %}" class="btn btn-secondary mt-4">Change Password</a>
+</div>
 {% endblock content %}
