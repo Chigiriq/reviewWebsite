@@ -18,6 +18,7 @@ from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import default_storage
+from django.db.models import Avg
 
 
 @login_required
@@ -56,12 +57,14 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["reviews"] = Review.objects.all()[:3]
+        context["reviews"] = Review.objects.annotate(
+            avg_rating=Avg("ratings__average")
+        ).order_by("-avg_rating")[:3]
         context["products"] = Product.objects.all()[:4]
         # this is for if we want to add a news section.
         # the "news" could just be updates on what has been posted or something
-        # context["latest_news"] = News.objects.order_by("-publish_date")[:5]
-
+        # context["latest_reviews"] = News.objects.order_by("-publish_date")[:5]
+        context["latest_reviews"] = Review.objects.order_by("-date")[:5]
         context["current_year"] = datetime.now().year
 
         return context

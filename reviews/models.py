@@ -2,9 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
+from star_ratings.models import Rating
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Review(models.Model):
+    ratings = GenericRelation(Rating)
     title = models.CharField(max_length=255)
     game = models.CharField(max_length=30, blank=True, null=True)
     body = models.TextField()
