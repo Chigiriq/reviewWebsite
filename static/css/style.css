@@ -6,7 +6,7 @@
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f344f4;
     color: #333;
     line-height: 1.6;
   }
@@ -46,10 +46,9 @@
   }
   
   .navbar a:hover {
-    background-color: #555;
     border-radius: 4px;
   }
-  
+
   .navbar .navbar-brand {
     font-weight: bold;
     font-size: 24px;
@@ -72,7 +71,7 @@
   }
   
   .btn-primary {
-    background-color: #007bff;
+    background-color: #8cbaeb;
     color: #fff;
     border: none;
   }
@@ -156,3 +155,67 @@
       margin-top: 15px;
     }
   }
+
+  .reviews-container-custom {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 20px; /* Adds spacing between each review */
+  }
+  
+  .review-card-custom {
+    width: 100%; /* Ensures the card spans the full width */
+    display: flex;
+    flex-direction: column; /* Ensures content stacks vertically */
+  }
+  
+  .card-custom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Aligns content to fill the card */
+    height: auto; /* Allows for variable height if needed */
+    background-color: #fff; /* Optional: background styling */
+    border-radius: 8px; /* Optional: rounded corners */
+    padding: 20px; /* Optional: spacing inside the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  }
+  
+  .card-img-top-custom {
+    width: 100%;
+    height: 300px; /* Adjust image height as needed */
+    object-fit: cover; /* Maintains aspect ratio while covering the area */
+  }
+  
+  .custom-bgd {
+    background-color: #eaf0f7;
+  }
+
+  .custom-bgd2 {
+    background-color: #b1c6dd;
+  }
+
+
+  .card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit the color from the parent element */
+}
+
+.card-link:focus,
+.card-link:hover {
+    text-decoration: none; /* Ensure no underline on hover/focus */
+    color: inherit; /* Keep the text color consistent */
+}
+
+.card-title-custom {
+  text-align: center; /* Centers the title */
+}
+
+.small-text {
+  font-size: 0.8rem; /* Reduces the font size of the timestamp */
+}
+
+.bg-primary {
+  border-radius: 10px; /* Adjust the px value to change the roundness */
+  text-align: center;
+}
+
+

@@ -1,22 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Grid Container for Search Results -->
+<div class="bg-primary text-white p-3 rounded">Product Search Results</div>
+<br>
+
+<div class="row">
     {% for product in all_search_results %}
-    <div>
-        <div>
-            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4"> <!-- Grid item -->
+            <div class="product-item">
+                <!-- Product Image with Normalized Size -->
+                <div class="product-image">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid" style="width: 100%; height: 200px; object-fit: cover;">
+                </div>
 
-            {{ product.name }}
+                <!-- Product Name and Link -->
+                <div class="product-name text-center">
+                    <a href="{{ product.get_absolute_url }}" class="d-block">{{ product.name }}</a>
+                </div>
+
+                <!-- Product Price -->
+                <div class="product-price text-center">
+                    ${{ product.price }}
+                </div>
+            </div>
         </div>
-
-        <div>
-            ${{ product.price}}
-        </div>
-
-        <br>
-    </div>
-        {% comment %} <img src="{{ product.picture.url }}"> {% endcomment %}
     {% empty %}
         <h2>No results found</h2>
     {% endfor %}
+</div>
 {% endblock %}

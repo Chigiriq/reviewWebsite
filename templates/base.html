@@ -41,6 +41,7 @@
   </style>
 </head>
 
+<div class="custom-bgd">
 <body>
   <!-- This is for the profile view. It allows messages to appear if you try and upload something wrong or errors and stuff-->
   {% if messages %}
@@ -53,16 +54,24 @@
     </div>
   {% endif %}
 
-  <nav class="navbar bg-body-tertiary">
+
+  <nav class="navbar bg-primary">
     <div class="container-fluid">
       <!-- Navbar Brand and Back Button -->
       <div class="d-flex align-items-center">
         <!-- Logo -->
-        <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo">
+        <!-- <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo"> -->
         <!-- Brand -->
-        <a class="navbar-brand" href="{% url 'home' %}">Blue's Reviews</a>
+        <!-- <a class="navbar-brand" href="{% url 'home' %}">Blue's Reviews</a> -->
+
+        <!-- Combined Logo and Brand -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo">
+          Blue's Reviews
+        </a>
+        
         <!-- Back Button -->
-        <a href="javascript:void(0);" id="backButton" class="btn btn-primary ml-3" style="font-size: 16px;">Back</a>
+        <a href="javascript:void(0);" id="backButton" class="btn btn-primary ml-3">Back</a>
       </div>
 
       <!-- Profile Picture as Navbar Toggler -->
@@ -96,6 +105,7 @@
     </div>
   </nav> 
 
+
   <main>
     <div class="container">
       {% block content %}
@@ -122,4 +132,5 @@
   </footer>
 </body>
 
+</div>
 </html>
