@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="profile">
+        <h1>{{ user.name }}'s Profile</h1>
+        <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}" style="width: 150px; height: 150px; border-radius: 50%;">
+        <p><strong>Bio:</strong> {{ user.bio }}</p>
+        <p><strong>Verified Reviewer:</strong> {% if user.verifiedReviewer %}Yes{% else %}No{% endif %}</p>
+    </div>
+{% endblock %}

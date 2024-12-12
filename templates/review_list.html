@@ -15,7 +15,7 @@
 <div class = "post-container">
     {% if user.verifiedReviewer %}
         {% comment %} <p>Hi {{ user.name }}, you are a Verified Reviewer and can Post Reviews</p> {% endcomment %}
-        <a href="">Post a review</a>
+        <a href="{% url 'create_view' %}">Post a review</a>
     {% endif %}
 
     <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'searchRev' %}" >
@@ -32,7 +32,8 @@
         <!-- Wrap the entire card with an anchor tag to make the whole card clickable -->
         <a href="{{ review.get_absolute_url }}" class="card-link">
           <article class="card-custom">
-            <img src="{{ review.image.url|default:'images/default-review.jpg' }}" alt="review-thumb" class="card-img-top-custom">
+            <img src="{% if review.image %}{{ review.image.url }}{% else %}{% static 'images/games.jpg' %}{% endif %}" 
+     alt="review-thumb" class="card-img-top-custom">
             <div class="card-body-custom">
               <h5 class="card-title-custom">
                 {{ review.title }}

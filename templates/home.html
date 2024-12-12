@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Blue's Reviews - Home{% endblock title %}
-{% load ratings %}
-
+{% load ratings static %}
 
 {% block content %}
 <div class="container mt-4">
@@ -21,14 +20,17 @@
             {% for review in reviews %}
             <div class="col-md-4">
                 <div class="card shadow-sm mb-4">
-                    <!-- later logan make the images a standard size so they look nice on the home page-->
-                    <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}"style="max-width: 100%; height: 400px;">
+                    <!-- Check if the review has an image -->
+                    <img 
+                        src="{% if review.image %}{{ review.image.url }}{% else %}{% static 'images/games.jpg' %}{% endif %}" 
+                        class="card-img-top" 
+                        alt="{{ review.title }}" 
+                        style="max-width: 100%; height: 400px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ review.title }}</h5>
                         <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
                         <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
                         {% ratings review %}
-
                     </div>
                 </div>
             </div>
@@ -60,28 +62,26 @@
     <section class="latest-news mt-5">
         <h2 class="text-center">Latest News in Gaming</h2>
         <div class="row">
-
             {% for review in latest_reviews %}
             <div class="col-md-4">
                 <div class="card shadow-sm mb-4">
-                    <!-- later logan make the images a standard size so they look nice on the home page-->
-                    <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}"style="max-width: 100%; height: 400px;">
+                    <!-- Check if the review has an image -->
+                    {% if review.image %}
+                        <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}" style="max-width: 100%; height: 400px;">
+                    {% else %}
+                        <!-- Fallback image if no image exists -->
+                        <img src="{% static 'images/games.jpg' %}" class="card-img-top" alt="{{ review.title }}" style="max-width: 100%; height: 400px;">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ review.title }}</h5>
                         <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
                         <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
                         {% ratings review %}
-
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        </div>  
-        </ul>
     </section>
-
-    <!-- Footer -->
-   
 </div>
 {% endblock content %}

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.shortcuts import render, get_object_or_404
 
 
 @login_required
@@ -21,6 +22,11 @@ def apply_verified_reviewer(request):
         user.save()
         messages.success(request, "Your application has been submitted.")
     return redirect("profile")
+
+
+def user_profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    return render(request, "user_profile.html", {"user": user})
 
 
 # Create your views here.

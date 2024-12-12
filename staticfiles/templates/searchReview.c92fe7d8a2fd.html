@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for review in all_search_results %}
+    <div>
+        <div>
+            <a href="{{ review.get_absolute_url }}">{{ review.title }}</a>
+
+            ({{ review.game }})
+        </div>
+
+        <div>
+            {{ review.body}}
+        </div>
+
+        <div>
+            --{{ review.author }}
+        </div>
+
+        <br>
+    </div>
+
+    {% empty %}
+        <h2>No results found</h2>
+    {% endfor %}
+{% endblock %}

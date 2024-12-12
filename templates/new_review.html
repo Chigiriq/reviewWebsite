@@ -1,8 +1,42 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h1>New review</h1>
-<form action="" method="post">{% csrf_token %}
-{{ form }}
-<input type="submit" value="Save">
-</form>
-{% endblock content %}
+  <div class="container">
+    <h1 class="page-title mb-4">Submit Your Review</h1>
+    
+    <!-- Form start -->
+    <form action="" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+      {% csrf_token %}
+
+
+        <!--Title field-->
+      <div class="mb-3">
+        <label for="review-title" class="form-label">Review Title</label>
+        <input type="text" id="review-title" name="title" class="form-control" placeholder="Enter a title for your review" required>
+        <div class="invalid-feedback">
+          Please provide a title for your review.
+        </div>
+      </div>
+      
+      <!-- Review field -->
+      <div class="mb-3">
+        <label for="review-text" class="form-label">Review</label>
+        <textarea id="review-text" name="review" class="form-control" rows="4" required></textarea>
+        <div class="invalid-feedback">
+          Please enter a review.
+        </div>
+      </div>
+
+      <!-- Image upload field -->
+      <div class="mb-3">
+        <label for="image-upload" class="form-label">Upload Image (Optional)</label>
+        <input type="file" id="image-upload" name="image" class="form-control" accept="image/*">
+      </div>
+
+      <!-- Submit button -->
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </div>
+    </form>
+  </div>
+  {% endblock content %}

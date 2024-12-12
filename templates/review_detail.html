@@ -1,29 +1,30 @@
 {% extends "base.html" %}
 
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
-{% load ratings %}
+    {% load ratings %}
 
-{% ratings object %}
-<img src="{{ review.image.url }}" alt="{{ review.name }}" style="max-width: 100%; height: auto;">
-<div class="review-entry">
-    <h2>{{ object.title }}</h2>
-    <p>by {{ object.author }} | {{ object.date }}</p>
-    <p>{{ object.body }}</p>
-</div>
+    {% ratings object %}
+    
+    <div class="review-entry">
+        <h2>{{ object.title }}</h2>
+        <p>by 
+            <!-- Link to the author's profile page -->
+            <a href="{% url 'user_profile' object.author.username %}">
+                <!-- Display author's profile picture -->
+                <img src="{{ object.author.profile_picture.url }}" alt="{{ object.author.username }}" style="width: 30px; height: 30px; border-radius: 50%;"/>
+                {{ object.author.name }}
+            </a>
+            | {{ object.date }}
+        </p>
+        <p>{{ object.body }}</p>
+    </div>
 
-<hr>
-<h4>Comments</h4>
-{% for comment in review.comment_set.all %}
-<p>{{ comment.author }} &middot; {{ comment }}</p>
-{% endfor %}
-<hr>
-
-<h4>Add a comment</h4>
-<form action="" method="post">{% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-success ms-2" type="submit">Save</button>
-</form>
-
-{% endblock content %}
+    <hr>
+    <h4>Comments</h4>
+    {% for comment in review.comment_set.all %}
+        <p>{{ comment.author }} &middot; {{ comment }}</p>
+    {% endfor %}
+{% endblock %}

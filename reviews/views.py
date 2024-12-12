@@ -61,9 +61,7 @@ class HomePageView(TemplateView):
             avg_rating=Avg("ratings__average")
         ).order_by("-avg_rating")[:3]
         context["products"] = Product.objects.all()[:4]
-        # this is for if we want to add a news section.
-        # the "news" could just be updates on what has been posted or something
-        # context["latest_reviews"] = News.objects.order_by("-publish_date")[:5]
+
         context["latest_reviews"] = Review.objects.order_by("-date")[:5]
         context["current_year"] = datetime.now().year
 
@@ -146,7 +144,7 @@ class SearchView(ListView):
 class ReviewCreateView(CreateView):
     model = Review
     template_name = "new_review.html"
-    fields = ["title", "author", "body"]
+    fields = ["title", "author", "body", "image"]
 
 
 def update_bio(request):
