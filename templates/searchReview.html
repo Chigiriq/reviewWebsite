@@ -4,24 +4,28 @@
 <div class="bg-primary text-white p-3 rounded">Review Search Results</div>
 <br>
 
-    {% for review in all_search_results %}
-    <div class="review-card-custom">
-        <!-- Wrap the entire card with an anchor tag to make the whole card clickable -->
-        <a href="{{ review.get_absolute_url }}" class="card-link">
-          <article class="card-custom">
-            <img src="{{ review.image.url|default:'images/default-review.jpg' }}" alt="review-thumb" class="card-img-top-custom">
-            <div class="card-body-custom">
-              <h5 class="card-title-custom">{{ review.title }}</h5>
-              <p>{{ review.body|truncatewords:20 }}</p>
-              <time class="small-text">{{ review.date }}</time>
-            </div>
-          </article>
-        </a>
-      </div>
+{% for review in all_search_results %}
+  <div class="review-card-custom">
+    <!-- Wrap the entire card with an anchor tag to make the whole card clickable -->
+    <a href="{{ review.get_absolute_url }}" class="card-link">
+      <article class="card-custom">
+        <!-- Check if the review has an image and provide a default if not -->
+        {% if review.image %}
+          <img src="{{ review.image.url }}" alt="review-thumb" class="card-img-top-custom">
+        {% else %}
+          <img src="{{ STATIC_URL }}images/default-review.jpg" alt="default-review-thumb" class="card-img-top-custom">
+        {% endif %}
+        <div class="card-body-custom">
+          <h5 class="card-title-custom">{{ review.title }}</h5>
+          <p>{{ review.body|truncatewords:20 }}</p>
+          <time class="small-text">{{ review.date }}</time>
+        </div>
+      </article>
+    </a>
+  </div>
+  <br>
+{% empty %}
+  <h2>No results found</h2>
+{% endfor %}
 
-      <br>
-
-    {% empty %}
-        <h2>No results found</h2>
-    {% endfor %}
 {% endblock %}

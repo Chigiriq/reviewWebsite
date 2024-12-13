@@ -25,6 +25,18 @@
     <hr>
     <h4>Comments</h4>
     {% for comment in review.comment_set.all %}
-        <p>{{ comment.author }} &middot; {{ comment }}</p>
+        <p>{{ comment.author }} &middot; {{ comment.comment }} &middot; {{ comment.date }}</p>
+    {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
     {% endfor %}
-{% endblock %}
+    
+    <hr>
+
+    <!-- Comments-->
+    <h4>Add a Comment</h4>
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+    {% endblock %}
