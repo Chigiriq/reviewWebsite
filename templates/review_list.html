@@ -5,22 +5,35 @@
 
 {% block content %}
 
-<div class="card text-bg-dark border-0" style="height: 100px; overflow: hidden;">
-    <img src="{% static 'images/games.jpg' %}" class="card-img" alt="..." style="object-fit: cover; height: 100%; width: auto; float: right;">
-    <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background-color: rgba(0, 0, 0, 0.75);">
-      <h1 class="card-title text-primary">See Our Reviews!</h1>
+<div class="card text-bg-dark border-0" style="height: 100px; overflow: hidden; position: relative;">
+  <!-- Background Image -->
+  <img src="{% static 'images/games.jpg' %}" class="card-img" alt="Background Image" 
+       style="object-fit: cover; height: 100%; width: 100%; position: absolute; z-index: 0;">
+
+  <!-- Overlay Content -->
+  <div class="d-flex justify-content-between align-items-center w-100" 
+       style="height: 100%; position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.75); padding: 0 5%;">
+    <!-- Left Section: Text -->
+    <div class="text-white" style="flex: 1; text-align: left;">
+      <h1 class="card-title">See Our Reviews!</h1>
+    </div>
+    
+    <!-- Right Section: Button -->
+    <div style="flex: 1; text-align: right;">
+      {% if user.verifiedReviewer %}
+        <a href="{% url 'create_view' %}" class="btn btn-info">Post A Review</a>
+      {% endif %}
     </div>
   </div>
-  
-<div class = "post-container">
-    {% if user.verifiedReviewer %}
-        {% comment %} <p>Hi {{ user.name }}, you are a Verified Reviewer and can Post Reviews</p> {% endcomment %}
-        <a href="{% url 'create_view' %}">Post a review</a>
-    {% endif %}
+</div>
 
+
+
+<br>
+<div class = "post-container">
     <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'searchRev' %}" >
         <input class="form-control mr-sm-2" type="search" name="searchRev">
-        <button class="btn btn btn-info my-2 my-sm-0" type="submit"> Search </button>
+        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit"> Search </button>
     </form>
 </div>
 

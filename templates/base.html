@@ -58,20 +58,16 @@
   <nav class="navbar bg-primary">
     <div class="container-fluid">
       <!-- Navbar Brand and Back Button -->
-      <div class="d-flex align-items-center">
-        <!-- Logo -->
-        <!-- <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo"> -->
-        <!-- Brand -->
-        <!-- <a class="navbar-brand" href="{% url 'home' %}">Blue's Reviews</a> -->
-
+      <!-- Navbar Brand and Back Button -->
+      <div class="d-flex align-items-center justify-content-between">
         <!-- Combined Logo and Brand -->
-        <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo">
-          Blue's Reviews
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+          <img src="{% static 'images/blues_logo.jpg' %}" alt="Blue's Reviews Logo" class="mr-2">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blue's Reviews
         </a>
         
         <!-- Back Button -->
-        <a href="javascript:void(0);" id="backButton" class="btn btn-primary ml-3">Back</a>
+        <a href="javascript:void(0);" id="backButton" class="btn btn-primary">Back</a>
       </div>
 
       <!-- Profile Picture as Navbar Toggler -->

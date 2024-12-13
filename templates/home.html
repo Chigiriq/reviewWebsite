@@ -23,13 +23,15 @@
                     <!-- Check if the review has an image -->
                     <img 
                         src="{% if review.image %}{{ review.image.url }}{% else %}{% static 'images/games.jpg' %}{% endif %}" 
-                        class="card-img-top" 
-                        alt="{{ review.title }}" 
-                        style="max-width: 100%; height: 400px;">
+                        class="img-fluid" 
+                        style="width: 100%; height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <h5 class="card-title">{{ review.title }}</h5>
                         <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
                         <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                        
+                        <div class="space"></div>
+                        
                         {% ratings review %}
                     </div>
                 </div>
@@ -38,6 +40,8 @@
         </div>
     </section>
 
+    
+
     <!-- Products Section -->
     <section class="products mt-5">
         <h2 class="text-center">Popular Products</h2>
@@ -45,11 +49,15 @@
             {% for product in products %}
             <div class="col-md-3">
                 <div class="card shadow-sm mb-4">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image.url }}" class="img-fluid" style="width: 100%; height: 200px; object-fit: cover;" alt="{{ product.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">${{ product.price }}</p>
                         <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                        <span style="white-space: pre-line"></span>
+                        
+                        <div class="space"></div>
+
                         {% ratings product %}
                     </div>
                 </div>
@@ -67,7 +75,7 @@
                 <div class="card shadow-sm mb-4">
                     <!-- Check if the review has an image -->
                     {% if review.image %}
-                        <img src="{{ review.image.url }}" class="card-img-top" alt="{{ review.title }}" style="max-width: 100%; height: 400px;">
+                        <img src="{{ review.image.url }}" class="img-fluid" alt="{{ review.title }}" style="width: 100%; height: 200px; object-fit: cover;">
                     {% else %}
                         <!-- Fallback image if no image exists -->
                         <img src="{% static 'images/games.jpg' %}" class="card-img-top" alt="{{ review.title }}" style="max-width: 100%; height: 400px;">
@@ -76,6 +84,9 @@
                         <h5 class="card-title">{{ review.title }}</h5>
                         <p class="card-text">{{ review.summary|truncatewords:20 }}</p>
                         <a href="{{ review.get_absolute_url }}" class="btn btn-primary">Read More</a>
+                        
+                        <div class="space"></div>
+
                         {% ratings review %}
                     </div>
                 </div>

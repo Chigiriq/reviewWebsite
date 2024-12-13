@@ -1,14 +1,35 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}Products{% endblock title %}
 <p>Product List</p>
 
 {% block content %}
 
+<div class="card text-bg-dark border-0" style="height: 100px; overflow: hidden; position: relative;">
+    <!-- Background Image -->
+    <img src="{% static 'images/games2.jpg' %}" class="card-img" alt="Background Image" 
+         style="object-fit: cover; height: 100%; width: 100%; position: absolute; z-index: 0;">
+  
+    <!-- Overlay Content -->
+    <div class="d-flex justify-content-between align-items-center w-100" 
+         style="height: 100%; position: relative; z-index: 1; background-color: rgba(0, 0, 0, 0.75); padding: 0 5%;">
+      <!-- Left Section: Text -->
+      <div class="text-white" style="flex: 1; text-align: left;">
+        <h1 class="card-title">See Our Products!</h1>
+      </div>
+      
+      <!-- Right Section: Button -->
+      <div style="flex: 1; text-align: right;">
+      </div>
+    </div>
+  </div>
+
 <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
     <input class="form-control mr-sm-2" type="search" name="search">
     <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit"> Search </button>
 </form>
+
+<br>
 
 <!-- Grid Container for Products -->
 <div class="row">

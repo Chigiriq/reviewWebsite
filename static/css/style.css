@@ -213,9 +213,6 @@
   font-size: 0.8rem; /* Reduces the font size of the timestamp */
 }
 
-.bg-primary {
-  border-radius: 10px; /* Adjust the px value to change the roundness */
-  text-align: center;
+.space {
+  padding-bottom: 12.5px;
 }
-
-
