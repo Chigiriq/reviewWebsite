@@ -9,6 +9,7 @@ from django.views.generic import (
     FormView,
     CreateView,
 )
+
 from django.contrib import messages
 from django.urls import reverse
 from datetime import datetime
@@ -19,6 +20,8 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import default_storage
 from django.db.models import Avg
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 @login_required
@@ -141,10 +144,18 @@ class SearchView(ListView):
         return result
 
 
-class ReviewCreateView(CreateView):
+class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     template_name = "new_review.html"
     fields = ["title", "author", "body", "image"]
+    success_url = reverse_lazy("review_list")
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("review_list")
 
 
 def update_bio(request):
