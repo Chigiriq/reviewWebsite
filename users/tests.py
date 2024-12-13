@@ -3,8 +3,11 @@ from django.test import TestCase
 # Create your tests here.
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.conf import settings
+settings.DEBUG = True
 
-#--------------Model Tests--------------------
+#--------------Model Tests--------------------Works
 class CustomUserModelTests(TestCase):
     def setUp(self):
         """Set up a sample user for testing."""
@@ -52,3 +55,43 @@ class CustomUserModelTests(TestCase):
         )
         self.assertFalse(new_user.verifiedReviewer)
 #--------------End Model Tests--------------------
+
+# --------------View Tests--------------------Works
+class CustomUserViewsTests(TestCase):
+    def setUp(self):
+        """Set up test data."""
+        self.user = get_user_model().objects.create_user(
+            username="testuser",
+            password="securepassword123",
+            name="Test User",
+            review_request_status="Denied",
+        )
+        self.client.login(username="testuser", password="securepassword123")
+
+
+    def test_password_change_view(self):
+        """Test PasswordChangeView."""
+        response = self.client.get(reverse("password_change"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/password_change_form.html") 
+
+    def test_user_profile_view(self):
+        """Test user_profile view."""
+        response = self.client.get(reverse("user_profile", kwargs={"username": self.user.username}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "user_profile.html")
+        self.assertContains(response, self.user.name)
+
+
+    def test_signup_view(self):
+        """Test SignUpView."""
+        response = self.client.get(reverse("signup"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "registration/signup.html")
+
+    def test_profile_detail_view(self):
+        """Test ProfileDetail view."""
+        response = self.client.get(reverse("profile"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "profile.html")
+# --------------End View Tests--------------------
