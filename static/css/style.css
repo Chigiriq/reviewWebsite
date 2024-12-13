@@ -216,3 +216,7 @@
 .space {
   padding-bottom: 12.5px;
 }
+
+.spaceSmall {
+  padding-bottom: 5px;
+}

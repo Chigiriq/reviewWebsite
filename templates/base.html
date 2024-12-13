@@ -110,7 +110,8 @@
   </main>
 
   <!-- Back Button Javascript -->
-  <script>
+  <!-- Note: this one breaks randomly -->
+  <!-- <script>
     document.getElementById("backButton").addEventListener("click", function() {
       // Check if we're on the homepage or have no previous history
       if (window.history.state === null || window.history.length === 1) {
@@ -120,6 +121,19 @@
         // Otherwise, go back in history
         window.history.back();
       }
+    });
+  </script> -->
+  <!-- Back Button Javascript -->
+  <script>
+    document.getElementById("backButton").addEventListener("click", function() {
+        // Check if the current page is the homepage
+        if (window.location.pathname === "/") {
+            // If on the homepage, redirect to homepage (you can adjust the URL as necessary)
+            window.location.href = "{% url 'home' %}";
+        } else {
+            // If not on the homepage, go back in history
+            window.history.back();
+        }
     });
   </script>
 

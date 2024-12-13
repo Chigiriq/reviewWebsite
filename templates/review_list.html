@@ -27,13 +27,14 @@
   </div>
 </div>
 
-
-
-<br>
-<div class = "post-container">
-    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'searchRev' %}" >
-        <input class="form-control mr-sm-2" type="search" name="searchRev">
-        <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit"> Search </button>
+<!-- Search Form -->
+<div class="post-container" style="margin-top: 20px;">
+    <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'searchRev' %}" style="display: flex; width: 100%; align-items: center;">
+        <!-- Search Bar (normal width) -->
+        <input class="form-control mr-sm-2" type="search" name="searchRev" style="flex-grow: 1; margin-right: 10px;">
+        
+        <!-- Solid Search Button -->
+        <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
     </form>
 </div>
 

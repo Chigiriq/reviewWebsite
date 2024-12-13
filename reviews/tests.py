@@ -84,7 +84,7 @@ class CommentModelTest(TestCase):
 
 # --------------End Model Tests--------------------
 
-# --------------View Tests--------------------
+# --------------View Tests 2--------------------
 
 
 class SimpleViewsTest(TestCase):

@@ -5,38 +5,64 @@
 
 {% block content %}
     {% load ratings %}
+    <!-- Review Entry -->
+    <div class="review-entry" style="display: flex; flex-direction: column; align-items: center;">
 
-    {% ratings object %}
-    
-    <div class="review-entry">
-        <h2>{{ object.title }}</h2>
-        <p>by 
-            <!-- Link to the author's profile page -->
-            <a href="{% url 'user_profile' object.author.username %}">
-                <!-- Display author's profile picture -->
-                <img src="{{ object.author.profile_picture.url }}" alt="{{ object.author.username }}" style="width: 30px; height: 30px; border-radius: 50%;"/>
-                {{ object.author.name }}
-            </a>
-            | {{ object.date }}
-        </p>
-        <p>{{ object.body }}</p>
+        <!-- Product Title Centered -->
+        <h1 style="font-size: 2.5em; font-weight: bold; margin-bottom: 20px;">{{ object.title }}</h1>
+
+        <!-- Image Centered Below Title -->
+        <div class="review-image" style="margin-top: 20px; text-align: center;">
+            <img src="{% if object.image %}{{ object.image.url }}{% else %}{% static 'images/games.jpg' %}{% endif %}" 
+                 alt="review-thumb" class="card-img-top-custom" style="width: 100%; max-width: 600px; height: auto; object-fit: cover;">
+        </div>
+
+        <div class="space"></div>
+
+        <!-- Author Info and Ratings Below the Image -->
+        <div class="review-header" style="display: flex; justify-content: space-between; width: 45%; margin-top: 20px;">
+            <!-- Left Section: Author Info -->
+            <span style="display: flex; align-items: center;">
+                <a href="{% url 'user_profile' object.author.username %}">
+                    <!-- Display author's profile picture -->
+                    <img src="{{ object.author.profile_picture.url }}" alt="{{ object.author.username }}" style="width: 30px; height: 30px; border-radius: 50%;"/>
+                </a>
+                <a href="{% url 'user_profile' object.author.username %}" style="margin-left: 10px;">
+                    {{ object.author.name }}
+                </a>
+                | {{ object.date }}
+            </span>
+
+            <!-- Right Section: Ratings -->
+            <div class="review-rating" style="text-align: right;">
+                {% ratings object %}
+            </div>
+        </div>
     </div>
 
     <hr>
-    <h4>Comments</h4>
-    {% for comment in review.comment_set.all %}
-        <p>{{ comment.author }} &middot; {{ comment.comment }} &middot; {{ comment.date }}</p>
-    {% empty %}
-        <p>No comments yet. Be the first to comment!</p>
-    {% endfor %}
-    
+
+    <!-- Review Body -->
+    <p style="text-align: left; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto; padding-left: 30px;">{{ object.body }}</p>
+
     <hr>
 
-    <!-- Comments-->
-    <h4>Add a Comment</h4>
-    <form method="POST" class="needs-validation" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit Comment</button>
-    </form>
-    {% endblock %}
+    <!-- Comments Section -->
+    <div class="comments" style="text-align: left; margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto; padding-left: 30px;">
+        <h4>Comments</h4>
+        {% for comment in object.comment_set.all %}
+            <p>{{ comment.author }} &middot; {{ comment.comment }} &middot; {{ comment.date }}</p>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+        <hr>
+
+        <!-- Add Comment Form -->
+        <h4>Add a Comment</h4>
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+    </div>
+{% endblock %}

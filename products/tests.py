@@ -50,7 +50,7 @@ class ProductViewsTests(TestCase):
         self.product1 = Product.objects.create(
             name="Test Product 1",
             description="A test product.",
-            price=10.99,
+            price=10.00,
             image=self.mock_image,  # Adding the image field
         )
 
@@ -62,43 +62,19 @@ class ProductViewsTests(TestCase):
         self.assertContains(response, "Test Product 1")
         self.assertContains(response, self.product1.image.url)  # Verify image URL
 
-
-    # def test_product_detail_view(self):
-    #     """Test ProductDetailView displays the correct template and product."""
-    #     response = self.client.get(reverse("product_detail", kwargs={"pk": self.product1.pk}))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, "product_detail.html")
-    #     self.assertContains(response, self.product1.name)
-    #     self.assertContains(response, self.product1.description)
+    def test_product_detail_view_404(self):
+        """Test ProductDetailView returns 404 for a non-existing product."""
+        response = self.client.get(reverse("product_detail", kwargs={"pk": 9999}))  # Non-existent product ID
+        self.assertEqual(response.status_code, 404)
         
-    #     # Check that the price with a dollar sign is in the response
-    #     self.assertContains(response, f"${self.product1.price:.2f}")
+    def test_product_detail_view(self):
+        """Test that the product detail page renders correctly."""
+        response = self.client.get(reverse("product_detail", kwargs={"pk": self.product1.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "product_detail.html")
+        self.assertContains(response, "Test Product 1")
+        self.assertContains(response, "$10.00")  # Since floatformat:2 is used in the template
 
-    # def test_product_detail_view_404(self):
-    #     """Test ProductDetailView returns 404 for a non-existing product."""
-    #     response = self.client.get(reverse("product_detail", kwargs={"pk": 9999}))  # Non-existent product ID
-    #     self.assertEqual(response.status_code, 404)
 
-    # def test_search_view(self):
-    #     """Test SearchView displays the correct products based on search."""
-    #     # Test search with matching results
-    #     response = self.client.get(reverse("search") + "?search=Test Product 1")
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, "searchProduct.html")
-    #     self.assertContains(response, self.product1.name)
-    #     self.assertNotContains(response, self.product2.name)
 
-    #     # Test search with no matching results
-    #     response = self.client.get(reverse("search") + "?search=Non-existent Product")
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, "searchProduct.html")
-    #     self.assertContains(response, "No products found.")
 
-    # def test_search_view_no_query(self):
-    #     """Test SearchView with no search query."""
-    #     response = self.client.get(reverse("search"))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, "searchProduct.html")
-    #     # Test if all products are returned when no query is passed
-    #     self.assertContains(response, self.product1.name)
-    #     self.assertContains(response, self.product2.name)

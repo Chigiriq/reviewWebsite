@@ -24,9 +24,15 @@
     </div>
   </div>
 
-<form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
-    <input class="form-control mr-sm-2" type="search" name="search">
-    <button class="btn btn btn-outline-info my-2 my-sm-0" type="submit"> Search </button>
+  <br>
+
+<!-- Search Form -->
+<form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}" style="display: flex; width: 100%; align-items: center;">
+    <!-- Search Bar (normal width) -->
+    <input class="form-control mr-sm-2" type="search" name="search" style="flex-grow: 1; margin-right: 10px;">
+    
+    <!-- Search Button (normal width) -->
+    <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
 </form>
 
 <br>
